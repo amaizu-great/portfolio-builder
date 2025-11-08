@@ -158,3 +158,16 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes text-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-text-shimmer {
+  animation: text-shimmer 7s linear infinite;
+}

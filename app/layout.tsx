@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner"
 import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
 import { Poppins, DM_Sans, Tenor_Sans } from "next/font/google";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
@@ -37,10 +37,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SidebarProvider className="h-svh" style={ { "--sidebar-width": "calc(var(--spacing) * 72)", "--header-height": "calc(var(--spacing) * 12)", } as React.CSSProperties }>  
           <AppSidebar variant="inset" />
           <SidebarInset className="overflow-y-auto scrollbar">
-            <SiteHeader />
             {children}
           </SidebarInset>
         </SidebarProvider>
+        <Toaster position="top-right"/>
       </body>
     </html>
   );
