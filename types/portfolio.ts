@@ -4,7 +4,7 @@ export type PortfolioData = {
   projects?: projectType[]
   experience?: experienceType[]
   testimonials?: testimonialType[]
-  newsletter?: newsletterType[]
+  newsletter?: newsletterType
 }
 
 export type profileType = {
@@ -68,12 +68,10 @@ export type duration = {
 export type testimonialType = {
   name: string;
   company: string;
-  testimonial: string;
+  testimony: string;
   image: string | File | null;
 }
 
 export type newsletterType = {
   email: string;
-  name: string;
-  message: string;
 }

@@ -15,8 +15,8 @@ type PortfolioStates = {
   setExperience: (value: experienceType[]) => void;
   testimonials: testimonialType[];
   setTestimonials: (value: testimonialType[]) => void;
-  newsletter: newsletterType[];
-  setNewsletter: (value: newsletterType[]) => void;
+  newsletter: newsletterType;
+  setNewsletter: (value: newsletterType) => void;
   setPortfolioStates: (value: PortfolioData) => void;
 };
 
@@ -33,8 +33,8 @@ const portfolioState = create<PortfolioStates>()(
       setExperience: (value: experienceType[]) => set({ experience: value }),
       testimonials: [] as testimonialType[],
       setTestimonials: (value: testimonialType[]) => set({ testimonials: value }),
-      newsletter: [] as newsletterType[],
-      setNewsletter: (value: newsletterType[]) => set({ newsletter: value }), 
+      newsletter: {} as newsletterType,
+      setNewsletter: (value: newsletterType) => set({ newsletter: value }), 
       
       setPortfolioStates: (value: PortfolioData) => set({ ...value }),
     }),

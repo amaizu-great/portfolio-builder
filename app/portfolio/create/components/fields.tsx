@@ -21,11 +21,11 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import portfolioState from "@/zustand/persit/addPortfolio";
 import { AiFillInstagram, AiFillTikTok  } from "react-icons/ai";
 import useLoadingState from "@/zustand/non-persist/loadingState";
-import { experienceType, projectType, stackType } from "@/types/portfolio";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"; 
 import { FaGitlab, FaLinkedin, FaXTwitter, FaLaptopCode  } from "react-icons/fa6";
 import { FaGithub, FaQuora, FaYoutube, FaDiscord, FaChess, FaLink  } from "react-icons/fa";
+import { experienceType, projectType, stackType, testimonialType } from "@/types/portfolio";
 import { Dialog, DialogTitle, DialogHeader, DialogContent, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Drawer, DrawerClose, DrawerTitle,  DrawerFooter, DrawerHeader, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 
@@ -532,7 +532,6 @@ const ProfileTab = () => {
     </TabsContent>
   )
 }
-
 
 // ABOUT TAB
 const InterestDrawer = () => {
@@ -1138,7 +1137,7 @@ const Duration = ({ idx, exp }: { idx:number, exp: experienceType}) => {
         <Popover open={openFrom} onOpenChange={setOpenFrom}>
           <PopoverTrigger disabled={isLoading} asChild>
             <Button disabled={isLoading} variant="outline" id="date" className="w-full justify-between font-normal md:max-w-48" >
-              {exp?.duration?.from ? exp?.duration?.from.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select date"}
+              {exp?.duration?.from ? new Date(exp?.duration?.from).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select date"}
               <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
@@ -1155,7 +1154,7 @@ const Duration = ({ idx, exp }: { idx:number, exp: experienceType}) => {
         <Popover open={openTo} onOpenChange={setOpenTo}>
           <PopoverTrigger disabled={isLoading} asChild>
             <Button disabled={isLoading} variant="outline" id="date" className="w-full justify-between font-normal md:max-w-48" >
-              {exp?.duration?.to === "present" ? "Present" : exp?.duration?.to ? exp?.duration?.to.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select date"}
+              {exp?.duration?.to === "present" ? "Present" : exp?.duration?.to ? new Date(exp?.duration?.to).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select date"}
               <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
@@ -1339,11 +1338,223 @@ const ExperienceTab = () => {
   )
 }
 
+//TESTIMONAL TAB
+const TestimonyPhoto = ({ idx, tes }: { idx:number, tes: testimonialType}) => {
+  const { testimonials , setTestimonials} = portfolioState();
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const base64 = await fileToBase64(file);
+      const updatedTestimonials = testimonials.map((t, i) =>
+        i === idx ? { ...t, image: base64 } : t
+      );
+
+      setTestimonials(updatedTestimonials);
+    }
+  };
+
+  const showImage = tes.image instanceof File || (typeof tes.image === "string" && tes.image !== "");
+
+  return (
+    <div className="flex flex-col gap-1 items-center">
+      <p className="font-medium text-[14px]">Photo</p> 
+      { showImage ?
+        <Label>
+          <Image src={tes.image instanceof File ? URL.createObjectURL(tes.image) : (tes.image ?? "")} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
+          <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange}  className="absolute size-full hidden" />
+        </Label> 
+        :
+        <Label className="size-32 bg-gray-100 border rounded-xl flex items-center justify-center relative cursor-pointer">
+          <ImagePlus size={20}/>
+          <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange} className="absolute size-full hidden" />
+        </Label>
+      }
+    </div>
+  )
+}
+
+const TestimonialDrawer = ({ idx, tes }: { idx:number, tes: testimonialType}) => {
+  const [open, setOpen] = useState(false)
+  const { isLoading } = useLoadingState();
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const { testimonials , setTestimonials} = portfolioState();
+
+  const removeTestimony = (idx: number) => {
+    setTestimonials(testimonials.filter((_, index) => index !== idx))
+  }
+
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>)=> {
+    const updatedTestimony = testimonials.map((tes, i) =>
+      i === idx ? { ...tes, name: e.target.value } : tes
+    );
+  
+    setTestimonials(updatedTestimony);
+  }
+
+  const handleChangeCompany= (e: React.ChangeEvent<HTMLInputElement>)=> {
+    const updatedTestimonial = testimonials.map((tes, i) =>
+      i === idx ? { ...tes, company: e.target.value } : tes
+    );
+  
+    setTestimonials(updatedTestimonial);
+  }
+
+  const handleChangeTestimony = (e: React.ChangeEvent<HTMLTextAreaElement>)=> {
+    const updatedTestimonial = testimonials.map((tes, i) =>
+      i === idx ? { ...tes, testimony: e.target.value } : tes
+    );
+  
+    setTestimonials(updatedTestimonial);
+  } 
+  
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild className="cursor-pointer hover:bg-Grey/30">
+          <div className="flex justify-between border rounded-[8px] items-center shadow-sm p-2 pl-3">
+            <div className="flex gap-2 items-center font-semibold text-[14px]"> 
+              <p>Testimony {idx + 1}</p>
+              <IoIosArrowDown />
+            </div>
+            <Button onClick={(e) => {e.stopPropagation(); removeTestimony(idx)}} className="cursor-pointer"> <FiTrash2 /> </Button>
+          </div>
+        </DialogTrigger>
+
+        <DialogContent showCloseButton={false} className="flex flex-col gap-4 sm:max-w-[425px] max-h-[90%] overflow-y-auto scrollbar">
+          <DialogHeader>
+            <DialogTitle>Testimony {idx + 1}</DialogTitle>
+          </DialogHeader>
+
+          <div className="flex flex-col gap-4 py-2 px-1 overflow-y-scroll scrollbar"> 
+            <TestimonyPhoto idx={idx} tes={tes}/>
+
+            <Label className="flex flex-col gap-2 items-start min-w-full ">
+              <p className="whitespace-nowrap">Name</p>
+
+              <Input className="text-[14px]" disabled={isLoading} value={tes.name ?? ""} onChange={handleChangeName}/>
+            </Label>
+            
+            <Label className="flex flex-col gap-2 items-start min-w-full ">
+              <p className="whitespace-nowrap">Company</p>
+              <Input className="text-[14px]" disabled={isLoading} value={tes.company ?? ""} onChange={handleChangeCompany}/>
+            </Label>
+            
+            <Label className="flex flex-col gap-2 items-start min-w-full ">
+              <p className="whitespace-nowrap">Testimony</p>
+              <Textarea className="h-30 text-[14px]" disabled={isLoading} value={tes.testimony ?? ""} onChange={handleChangeTestimony}/>
+            </Label> 
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+            <Button className="flex w-full cursor-pointer">Done</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild className="cursor-pointer hover:bg-Grey/30">
+        <div className="flex justify-between border rounded-[8px] items-center shadow-sm p-2 pl-3">
+          <div className="flex gap-2 items-center font-semibold text-[14px]"> 
+            <p>Testimony {idx + 1}</p>
+            <IoIosArrowDown />
+          </div>
+          <Button onClick={(e) => {e.stopPropagation(); removeTestimony(idx)}} className="cursor-pointer"> <FiTrash2 /> </Button>
+        </div>
+      </DrawerTrigger>
+
+      <DrawerContent className="flex flex-col gap-4 h-full data-[vaul-drawer-direction=bottom]:max-h-[90vh]">
+        <DrawerHeader className="py-0">
+          <DialogTitle>Testimony {idx + 1}</DialogTitle>
+        </DrawerHeader>
+
+        <div className="flex flex-col gap-4 py-2 px-4 overflow-y-scroll scrollbar"> 
+          <TestimonyPhoto idx={idx} tes={tes}/>
+
+          <Label className="flex flex-col gap-2 items-start min-w-full ">
+            <p className="whitespace-nowrap">Name</p>
+
+            <Input className="text-[14px]" disabled={isLoading} value={tes.name ?? ""} onChange={handleChangeName}/>
+          </Label>
+          
+          <Label className="flex flex-col gap-2 items-start min-w-full ">
+            <p className="whitespace-nowrap">Company</p>
+
+            <Input className="text-[14px]" disabled={isLoading} value={tes.company ?? ""} onChange={handleChangeCompany}/>
+          </Label>
+          
+          <Label className="flex flex-col gap-2 items-start min-w-full ">
+            <p className="whitespace-nowrap">Testimony</p>
+
+            <Textarea className="h-30 text-[14px]" disabled={isLoading} value={tes.testimony ?? ""} onChange={handleChangeTestimony}/>
+          </Label> 
+        </div>
+
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button>Done</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+const TestimonialTab = () => {
+  const { testimonials , setTestimonials} = portfolioState();
+
+  const  addNewTestimonial = () => {
+    setTestimonials([...testimonials, {} as testimonialType]);
+  }
+  return(
+    <TabsContent value="testimonials" className="flex flex-col gap-3 py-2 px-1 overflow-y-auto scrollbar">
+      <div className="flex justify-between items-center pr-2">
+        <h2 className="font-semibold text-2xl">Testimonials</h2> 
+        <Button onClick={addNewTestimonial} className="cursor-pointer"><IoAdd /></Button>
+      </div>
+
+      <div className="flex flex-col gap-4 overflow-y-scroll scrollbar">
+        {testimonials.map((tes,idx) => <TestimonialDrawer key={idx} idx={idx} tes={tes}/>)}
+      </div>
+    </TabsContent>
+  )
+}
+
+//NEWLETTER TAB
+
+const NewsLetterTab = () => {
+  const { isLoading } = useLoadingState();
+  const { newsletter , setNewsletter} = portfolioState(); 
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewsletter({...newsletter, email: e.target.value});
+  }
+
+  return(
+    <TabsContent value="newsletter" className="flex flex-col gap-3 py-2 px-1 overflow-y-auto scrollbar"> 
+      <h2 className="font-semibold text-2xl">Newsletter</h2>  
+
+      <div className="flex flex-col gap-4 overflow-y-scroll scrollbar"> 
+        <Label className="flex flex-col gap-2 items-start min-w-full ">
+          <p className="whitespace-nowrap">Your Email to recieve messages</p>
+          <Input className="text-[14px]" disabled={isLoading} value={newsletter.email ?? ""} onChange={handleChangeEmail}/>
+        </Label> 
+      </div>
+    </TabsContent>
+  )
+}
+
 
 const Fields = () => {
   return (
-    <div className="flex w-full min-w-1/2 overflow-y-auto scrollbar">
-      <Tabs defaultValue="profile" className="overflow-hidden">
+    <div className="flex size-full md:max-w-1/2 overflow-y-auto scrollbar">
+      <Tabs defaultValue="profile" className="overflow-hidden w-full">
         <div className="flex items-center overflow-x-scroll scrollbar overflow-y-hidden py-3">
           <TabsList >
             <TabsTrigger className="cursor-pointer" value="profile">Profile</TabsTrigger>
@@ -1360,6 +1571,8 @@ const Fields = () => {
           <AboutTab />
           <ProjectsTab />
           <ExperienceTab />
+          <TestimonialTab />
+          <NewsLetterTab />
         </div>
       </Tabs>
     </div>
