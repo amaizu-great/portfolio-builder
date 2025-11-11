@@ -40,7 +40,6 @@ export type socialsType = {
 
 export type aboutType = {
   bio: string;
-  heading?: string;
   interests?: string[];
   image?: string | File | null;
 }
@@ -49,7 +48,6 @@ export type projectType = {
   name: string;
   link?: string;
   github?: string;
-  featured: boolean;
   description: string;
   technologies: string[];
 }
