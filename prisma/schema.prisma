@@ -29,12 +29,12 @@ type Profile {
   description  String
   stacks       StackType[]
   socials      SocialsType?
-  profileImage String?
+  profileImage Image?
 }
 
 type StackType {
   name String
-  icon String
+  icon Image
 }
 
 type SocialsType {
@@ -53,7 +53,7 @@ type SocialsType {
 type About {
   bio        String
   interests  String[]
-  image      String?
+  image      Image?
 }
 
 type Project {
@@ -81,9 +81,14 @@ type Testimonial {
   name      String
   company   String?
   testimony String
-  image     String?
+  image     Image?
 }
 
 type Newsletter {
   email String
+}
+
+type Image {
+  url                 String
+  publicId            String
 }

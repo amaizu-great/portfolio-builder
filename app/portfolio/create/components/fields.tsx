@@ -321,19 +321,19 @@ const StackDrawer = () => {
         if (file) {
             const base64 = await fileToBase64(file);
             const updatedStacks = (profile.stacks ?? []).map((s, i) =>
-          i === idx ? { ...s, icon: base64 } : s
+          i === idx ? { ...s, icon: { url:base64 } } : s
         );
         setProfile({ ...profile, stacks: updatedStacks });
       }
     };
   
-    const showImage = stack.icon instanceof File || (typeof stack.icon === "string" && stack.icon !== "");
+    const showImage = stack.icon.url !== undefined && stack.icon.url !== "";
 
     return (
       <div className="flex flex-col gap-1 items-center">
         { showImage ?
           <Label>
-            <Image src={stack.icon instanceof File ? URL.createObjectURL(stack.icon) : (stack.icon ?? "")} alt={`${stack.name} icon`} width={40} height={36} className="rounded-[8px] cursor-pointer max-h-9 max-w-10"/>
+            <Image src={stack?.icon?.url ? stack?.icon?.url : ""} alt={`${stack.name} icon`} width={40} height={36} className="rounded-[8px] cursor-pointer max-h-9 max-w-10"/>
             <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange}  className="absolute size-full hidden" />
           </Label> 
           :
@@ -347,7 +347,7 @@ const StackDrawer = () => {
   }
 
   const addNewStack = () => {
-    setProfile({...profile, stacks: [...profile.stacks ?? [], {name: "", icon: ""}] });
+    setProfile({...profile, stacks: [...profile.stacks ?? [], {name: "", icon: { url:"" }}] });
   }
 
   const removeStack = (idx: number) => {
@@ -459,18 +459,18 @@ const ProfileTab = () => {
       const file = e.target.files?.[0];
       if (file) {
         const base64 = await fileToBase64(file);
-        setProfile({ ...profile, profileImage: base64 });
+        setProfile({ ...profile, profileImage: { url: base64 } });
       }
     };
   
-    const showImage = profile.profileImage instanceof File || (typeof profile.profileImage === "string" && profile.profileImage !== "");
+    const showImage = profile.profileImage?.url !== undefined && profile.profileImage?.url !== "";
 
     return (
       <div className="flex flex-col gap-1 items-center">
         <p className="font-medium text-[14px]">Photo</p> 
         { showImage ?
           <Label>
-            <Image src={profile.profileImage instanceof File ? URL.createObjectURL(profile.profileImage) : (profile.profileImage ?? "")} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
+            <Image src={profile?.profileImage?.url ? profile?.profileImage?.url : ""} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
             <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange}  className="absolute size-full hidden" />
           </Label> 
           :
@@ -649,18 +649,18 @@ const AboutTab  = () => {
       const file = e.target.files?.[0];
       if (file) {
         const base64 = await fileToBase64(file);
-        setAbout({ ...about, image: base64 });
+        setAbout({ ...about, image: { url: base64 } });
       }
     };
   
-    const showImage = about.image instanceof File || (typeof about.image === "string" && about.image !== "");
+    const showImage = about.image?.url !== undefined && about.image?.url !== "";
 
     return (
       <div className="flex flex-col gap-1 items-center">
         <p className="font-medium text-[14px]">Photo</p> 
         { showImage ?
           <Label>
-            <Image src={about.image instanceof File ? URL.createObjectURL(about.image) : (about.image ?? "")} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
+            <Image src={about?.image?.url ? about?.image?.url : ""} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
             <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange}  className="absolute size-full hidden" />
           </Label> 
           :
@@ -1347,21 +1347,21 @@ const TestimonyPhoto = ({ idx, tes }: { idx:number, tes: testimonialType}) => {
     if (file) {
       const base64 = await fileToBase64(file);
       const updatedTestimonials = testimonials.map((t, i) =>
-        i === idx ? { ...t, image: base64 } : t
+        i === idx ? { ...t, image: { url:base64 } } : t
       );
 
       setTestimonials(updatedTestimonials);
     }
   };
 
-  const showImage = tes.image instanceof File || (typeof tes.image === "string" && tes.image !== "");
+  const showImage = tes.image?.url !== undefined && tes.image?.url !== "";;
 
   return (
     <div className="flex flex-col gap-1 items-center">
       <p className="font-medium text-[14px]">Photo</p> 
       { showImage ?
         <Label>
-          <Image src={tes.image instanceof File ? URL.createObjectURL(tes.image) : (tes.image ?? "")} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
+          <Image src={tes?.image?.url ? tes?.image?.url : ""} alt="profile" width={128} height={128} className="rounded-xl cursor-pointer max-h-32 max-w-32"/>
           <Input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange}  className="absolute size-full hidden" />
         </Label> 
         :

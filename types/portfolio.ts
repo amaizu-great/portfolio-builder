@@ -9,6 +9,12 @@ export type PortfolioData = {
   newsletter?: newsletterType
 }
 
+
+export type ImageType = {
+  url: string
+  publicId?: string
+}
+
 export type profileType = {
   email: string;
   phone?: string;
@@ -18,12 +24,12 @@ export type profileType = {
   description: string;
   stacks?: stackType[];
   socials?: socialsType;
-  profileImage: string | File | null;
+  profileImage: ImageType;
 }
 
 export type stackType = {
   name: string;
-  icon: string | File;
+  icon: ImageType;
 }
 
 export type socialsType = {
@@ -42,7 +48,7 @@ export type socialsType = {
 export type aboutType = {
   bio: string;
   interests?: string[];
-  image?: string | File | null;
+  image?: ImageType;
 }
 
 export type projectType = {
@@ -70,7 +76,7 @@ export type testimonialType = {
   name: string;
   company: string;
   testimony: string;
-  image: string | File | null;
+  image: ImageType;
 }
 
 export type newsletterType = {
