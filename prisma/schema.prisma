@@ -7,3 +7,83 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Portfolio {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  templates     String
+  views         Int
+  profile       Profile
+  about         About?
+  projects      Project[]
+  experience    Experience[]
+  testimonials  Testimonial[]
+  newsletter    Newsletter?
+}
+
+type Profile {
+  email        String
+  phone        String?
+  lastName     String
+  location     String?
+  firstName    String
+  description  String
+  stacks       StackType[]
+  socials      SocialsType?
+  profileImage String?
+}
+
+type StackType {
+  name String
+  icon String
+}
+
+type SocialsType {
+  x          String?
+  quora      String?
+  github     String?
+  gitlab     String?
+  tiktok     String?
+  discord    String?
+  youtube    String?
+  website    String?
+  linkedin   String?
+  instagram  String?
+}
+
+type About {
+  bio        String
+  interests  String[]
+  image      String?
+}
+
+type Project {
+  name          String
+  link          String?
+  github        String?
+  description   String
+  technologies  String[]
+}
+
+type Experience {
+  role             String
+  link             String?
+  company          String
+  duration         Duration
+  responsibilities String[]
+}
+
+type Duration {
+  from DateTime
+  to   String
+}
+
+type Testimonial {
+  name      String
+  company   String?
+  testimony String
+  image     String?
+}
+
+type Newsletter {
+  email String
+}

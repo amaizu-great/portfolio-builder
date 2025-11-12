@@ -1,4 +1,6 @@
 export type PortfolioData = {
+  templates: string
+  views: number
   profile: profileType
   about?: aboutType
   projects?: projectType[]
@@ -13,7 +15,6 @@ export type profileType = {
   lastName: string;
   location?: string;
   firstName: string;
-  avability?: boolean;
   description: string;
   stacks?: stackType[];
   socials?: socialsType;
