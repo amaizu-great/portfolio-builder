@@ -36,8 +36,8 @@ const NavMain = ({ items }: { items: NavItem[] }) => {
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link href="/">
-              <SidebarMenuButton tooltip="Dashboard" className={`${pathname === "/" ? "bg-Black text-white" : "text-Black"}  hover:bg-Black/80 hover:text-white transition-colors min-w-8 duration-300 cursor-pointer`}>
+            <Link href="/dashboard">
+              <SidebarMenuButton tooltip="Dashboard" className={`${pathname === "/dashboard" ? "bg-Black text-white" : "text-Black"}  hover:bg-Black/80 hover:text-white transition-colors min-w-8 duration-300 cursor-pointer`}>
                 <IconDashboard />
                 <span>Dashboard</span>
               </SidebarMenuButton>

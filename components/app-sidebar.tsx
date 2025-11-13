@@ -31,17 +31,17 @@ const data = {
   navMain: [
     {
       title: "Portfolios",
-      url: "/portfolio",
+      url: "/dashboard/portfolio",
       icon: IconFolder,
     },
     {
       title: "Templates",
-      url: "/templates",
+      url: "/dashboard/templates",
       icon: IconListDetails,
     },
     {
       title: "Analytics",
-      url: "/analytics",
+      url: "/dashboard/analytics",
       icon: IconChartBar,
     },
   ],

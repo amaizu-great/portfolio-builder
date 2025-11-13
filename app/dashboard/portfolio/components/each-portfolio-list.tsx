@@ -76,7 +76,7 @@ const ActionButton = ({ id }:{ id: string}) => {
       
       <DropdownMenuContent side="top" align="end" className="min-w-[120px]">
         <DropdownMenuItem> 
-          <button onClick={()=> router.push(`portfolio/${id}`)} className="flex items-center gap-2 text-gray-400 cursor-pointer">
+          <button onClick={()=> router.push(`/portfolio/${id}`)} className="flex items-center gap-2 text-gray-400 cursor-pointer">
             <Eye size={12} className='text-gray-400'/> 
             <p>View</p>
           </button> 
