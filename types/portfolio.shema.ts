@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const imageType = z.object({
-  publicId: z.string(),
-  url: z.union([z.string(), z.instanceof(File)])
+  url: z.string(),
+  publicId: z.string().optional()
 })
 
 // ✅ Base types
@@ -62,7 +62,7 @@ export const durationSchema = z.object({
 export const experienceSchema = z.object({
   role: z.string(),
   link: z.string().optional(),
-  comapany: z.string(),
+  company: z.string(),
   duration: durationSchema,
   responsibilities: z.array(z.string()),
 });
@@ -83,7 +83,7 @@ export const newsletterSchema = z.object({
 
 // ✅ PortfolioData
 export const portfolioDataSchema = z.object({
-  templates: z.string(),
+  template: z.string(),
   views: z.number().optional(),
   profile: profileSchema,
   about: aboutSchema.optional(),

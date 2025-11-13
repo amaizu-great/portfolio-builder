@@ -43,7 +43,8 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 @theme {
-  --color-Grey: #E0E0E0;
+  --color-Grey: #fafafa;
+  --color-Grey2: #737373;
   --color-Black: #18181b;
   --font-dmsans: 'DM Sans', sans-serif;
   --font-poppins: 'Poppins', sans-serif;

@@ -1,32 +1,47 @@
 "use client"
 
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import SearchBar from "./components/searchBar";
+import { errorToast } from "@/lib/toastConfig";
 import EmptyPortfolio from "./components/empty";
+import { PortfolioData } from "@/types/portfolio";
 import LoadingPortfolio from "./components/loading";
 import { SiteHeader } from "@/components/site-header";
+import HeadingSection from "./components/heading-section";
+import PortfolioTable from "./components/portfolio-table-list";
 
 const PortfolioPage = () => {
-  const [portfolios, setPortfolios] = useState([])
-  const [ isLoading, setIsLoading ] = useState(true)
-  const [ searchQuery, setSearchQuery ] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [portfolios, setPortfolios] = useState<PortfolioData[]>([]);
 
   useEffect(() => {
     const fetchPortfolio = async () => {
-      setIsLoading(true)
-      try {
-        
-      } catch (error) {
-        
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchPortfolio()
-  },[searchQuery])
+      setIsLoading(true);
 
-  if(isLoading){
-    return(
+      try {
+        const res = await fetch("/api/portfolio");
+
+        if(!res.ok) {
+          toast.error("Failed to fetch portfolios", errorToast);
+          console.log(await res.json())
+          return
+        }
+        const json = await res.json();
+
+        setPortfolios(json.data);
+      } catch (error) {
+        toast.error("An error occurred", errorToast);
+        console.log(error)
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPortfolio();
+  }, []);
+
+
+  if (isLoading) {
+    return (
       <>
         <SiteHeader />
         <LoadingPortfolio />
@@ -45,10 +60,11 @@ const PortfolioPage = () => {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader />                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
       <section className="flex flex-col gap-4 h-full px-[4%] py-4 lg:p-6 overflow-y-auto scrollbar">
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <HeadingSection />
+        <PortfolioTable data={portfolios} />
       </section>
     </>
   )

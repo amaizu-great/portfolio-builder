@@ -1,5 +1,6 @@
 export type PortfolioData = {
-  templates: string
+  id: string;
+  template: string
   views: number
   profile: profileType
   about?: aboutType
@@ -62,7 +63,7 @@ export type projectType = {
 export type experienceType = {
   role: string;
   link?: string;
-  comapany: string;
+  company: string;
   duration: duration;
   responsibilities: string[];
 }

@@ -1187,7 +1187,7 @@ const ExperienceDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) => {
 
   const handleChangeCompany = (e: React.ChangeEvent<HTMLInputElement>)=> {
     const updatedExperience = experience.map((exps, i) =>
-      i === idx ? { ...exps, comapany: e.target.value } : exps
+      i === idx ? { ...exps, company: e.target.value } : exps
     );
   
     setExperience(updatedExperience);
@@ -1231,7 +1231,7 @@ const ExperienceDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) => {
             <Label className="flex flex-col gap-2 items-start min-w-full ">
               <p className="whitespace-nowrap">Company name</p>
 
-              <Input className="text-[14px]" disabled={isLoading} value={exp.comapany ?? ""} onChange={handleChangeCompany}/>
+              <Input className="text-[14px]" disabled={isLoading} value={exp.company ?? ""} onChange={handleChangeCompany}/>
             </Label>
             
             <Label className="flex flex-col gap-2 items-start min-w-full ">
@@ -1285,7 +1285,7 @@ const ExperienceDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) => {
         <div className="flex flex-col gap-4 py-2 px-4 overflow-y-scroll scrollbar"> 
           <Label className="flex flex-col gap-2 items-start min-w-full ">
             <p className="whitespace-nowrap">Company name</p>
-            <Input className="text-[14px]" disabled={isLoading} value={exp.comapany ?? ""} onChange={handleChangeCompany}/>
+            <Input className="text-[14px]" disabled={isLoading} value={exp.company ?? ""} onChange={handleChangeCompany}/>
           </Label>
           
           <Label className="flex flex-col gap-2 items-start min-w-full ">
@@ -1553,7 +1553,7 @@ const NewsLetterTab = () => {
 
 const Fields = () => {
   return (
-    <div className="flex size-full md:max-w-1/2 overflow-y-auto scrollbar">
+    <div className="flex size-full lg:max-w-1/2 overflow-y-auto scrollbar">
       <Tabs defaultValue="profile" className="overflow-hidden w-full">
         <div className="flex items-center overflow-x-scroll scrollbar overflow-y-hidden py-3">
           <TabsList >
