@@ -1,9 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner"
-import { AppSidebar } from "@/components/app-sidebar";
 import { Poppins, DM_Sans, Tenor_Sans } from "next/font/google";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -33,14 +30,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode}>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${dmSans.variable} ${tenorSans.variable} antialiased font-poppins max-h-svh h-svh ring-0 focus:ring-0 overflow-y-auto scrollbar`} >
-        <SidebarProvider className="h-svh" style={ { "--sidebar-width": "calc(var(--spacing) * 72)", "--header-height": "calc(var(--spacing) * 12)", } as React.CSSProperties }>  
-          <AppSidebar variant="inset" />
-          <SidebarInset className="overflow-y-auto scrollbar">
-            {children}
-          </SidebarInset>
-        </SidebarProvider>
-        <Toaster position="top-right"/>
+      <body className={`${poppins.variable} ${dmSans.variable} ${tenorSans.variable} antialiased font-poppins max-h-svh h-svh overflow-y-auto scrollbar`} >
+        {children}
       </body>
     </html>
   );

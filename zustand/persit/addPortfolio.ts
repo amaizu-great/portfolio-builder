@@ -18,6 +18,8 @@ type PortfolioStates = {
   newsletter: newsletterType;
   setNewsletter: (value: newsletterType) => void;
   setPortfolioStates: (value: PortfolioData) => void;
+
+  clearAllState: () => void;
 };
 
 const portfolioState = create<PortfolioStates>()(
@@ -37,6 +39,9 @@ const portfolioState = create<PortfolioStates>()(
       setNewsletter: (value: newsletterType) => set({ newsletter: value }), 
       
       setPortfolioStates: (value: PortfolioData) => set({ ...value }),
+
+      
+      clearAllState: () => set({ profile: {} as profileType, about: {} as aboutType, projects: [], experience: [], testimonials: [], newsletter: {} as newsletterType }),
     }),
     {
       name: "portfolio-state",

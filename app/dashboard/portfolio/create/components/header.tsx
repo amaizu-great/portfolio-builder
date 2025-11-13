@@ -1,23 +1,15 @@
 import { toast } from "sonner"
+import { useRouter } from "next/navigation";
 import { ArrowDownToLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  Select,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectValue,
-  SelectContent,
-  SelectTrigger,
-} from "@/components/ui/select"
-import { PortfolioData } from "@/types/portfolio";
 import portfolioState from "@/zustand/persit/addPortfolio";
 import { allTemplatesName } from "@/app/templates/allTemplates";
 import useLoadingState from "@/zustand/non-persist/loadingState";
 import useTemplatesState from "@/zustand/non-persist/templateState";
 import { errorToast, succesToast, warnToast } from "@/lib/toastConfig";
+import { Select, SelectItem, SelectGroup, SelectLabel, SelectValue, SelectContent, SelectTrigger } from "@/components/ui/select"
 
 const SelectTemplate = () => {
   const { isLoading } = useLoadingState();
@@ -42,14 +34,15 @@ const SelectTemplate = () => {
 }
 
 const Header = () => {
+  const router = useRouter()
   const { template } = useTemplatesState();
   const { isLoading, setIsLoading } = useLoadingState();
-  const { profile , about, projects, experience, testimonials, newsletter } = portfolioState();
+  const { profile , about, projects, experience, testimonials, newsletter, clearAllState } = portfolioState();
 
   const handleCreatePortfolio = async () => {
     setIsLoading(true);
 
-    const body:PortfolioData = {
+    const body = {
       template, 
       profile,
       views: 0,
@@ -85,7 +78,8 @@ const Header = () => {
       }
 
       toast.success("Portfolio created successfully 🎉", succesToast)
-      
+      clearAllState()
+      router.push("/portfolio")
     } catch (error) {
         toast.error("an error occurred ⛔😞", errorToast)
         console.log(error)  

@@ -83,7 +83,7 @@ const ActionButton = ({ id }:{ id: string}) => {
         </DropdownMenuItem>
     
         <DropdownMenuItem> 
-          <button onClick={()=> router.push(`portfolio/${id}/edit`)} className="flex items-center gap-2 text-gray-400 cursor-pointer">
+          <button onClick={()=> router.push(`/dashboard/portfolio/${id}/edit`)} className="flex items-center gap-2 text-gray-400 cursor-pointer">
             <SquarePen size={12} className='text-gray-400'/> 
             <p>Edit</p>
           </button> 

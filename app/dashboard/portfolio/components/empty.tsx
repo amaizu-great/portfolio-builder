@@ -46,7 +46,7 @@ const EmptyPortfolio = () => {
       } 
       toast.success("Portfolio imported successfully ✅", succesToast);
       setPortfolioStates(json)
-      router.push("/portfolio/create")
+      router.push("/dashboard/portfolio/create")
     } catch (err) {
       toast.error("Failed to import file ❌. Please check your JSON format.", errorToast);
     }
@@ -71,7 +71,7 @@ const EmptyPortfolio = () => {
         } 
         toast.success("Portfolio imported successfully ✅", succesToast);
         setPortfolioStates(json)
-        router.push("/portfolio/create")
+        router.push("/dashboard/portfolio/create")
       } catch (err) {
         toast.error("❌ Failed to import file. Please check your JSON format.", errorToast);
       }
@@ -97,7 +97,7 @@ const EmptyPortfolio = () => {
 
       <EmptyContent>
         <div className="flex gap-2">
-          <Button className="cursor-pointer" onClick={() => router.push("/portfolio/create")}>
+          <Button className="cursor-pointer" onClick={() => router.push("/dashboard/portfolio/create")}>
             Create Portfolio
           </Button>
 
