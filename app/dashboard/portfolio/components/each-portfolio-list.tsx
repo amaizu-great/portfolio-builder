@@ -1,6 +1,7 @@
 "use client"
 
 import { toast } from 'sonner';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { PortfolioData } from '@/types/portfolio';
@@ -13,7 +14,8 @@ import { Dialog, DialogClose, DialogTitle, DialogFooter, DialogHeader, DialogTri
 
 
 const DeletePortfolio = ({ id }:{ id: string}) => {
-  const {isLoading, setIsLoading} = useLoadingState();
+  const [open, setOpen] = useState(false)
+  const { reFetch, setReFetch, isLoading, setIsLoading } = useLoadingState();
 
   const deletePortfolio = async () => {
     setIsLoading(true);
@@ -28,17 +30,19 @@ const DeletePortfolio = ({ id }:{ id: string}) => {
         return
       }
 
-      toast.success("portfolio deleted successfully ✅" , succesToast) 
+      toast.success("portfolio deleted successfully ✅" , succesToast)
+      setReFetch(!reFetch); 
     } catch (error) {
       console.error(error);
       toast.error("An unknown error occured 🤯, pls try again ", errorToast)
     } finally {
+      setOpen(false)
       setIsLoading(false);
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="flex items-center gap-2 text-red-500 cursor-pointer">
           <Trash2 className='text-red-500'/> 
@@ -55,10 +59,10 @@ const DeletePortfolio = ({ id }:{ id: string}) => {
 
         <DialogFooter className='flex flex-col sm:flex-row gap-3 w-full'>
           <DialogClose asChild>
-            <Button disabled={isLoading} variant="outline" className='cursor-pointer max-w-1/2 w-full'>Cancel</Button>
+            <Button disabled={isLoading} variant="outline" className='cursor-pointer sm:max-w-1/2 w-full'>Cancel</Button>
           </DialogClose>
 
-          <Button disabled={isLoading} onClick={deletePortfolio} className='max-w-1/2 w-full cursor-pointer disabled:opacity-50'>Delete</Button>
+          <Button disabled={isLoading} onClick={deletePortfolio} className='sm:max-w-1/2 w-full cursor-pointer disabled:opacity-50'>Delete</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -9,8 +9,10 @@ import LoadingPortfolio from "./components/loading";
 import { SiteHeader } from "@/components/site-header";
 import HeadingSection from "./components/heading-section";
 import PortfolioTable from "./components/portfolio-table-list";
+import useLoadingState from "@/zustand/non-persist/loadingState";
 
 const PortfolioPage = () => {
+  const { reFetch } = useLoadingState()
   const [isLoading, setIsLoading] = useState(true);
   const [portfolios, setPortfolios] = useState<PortfolioData[]>([]);
 
@@ -37,7 +39,7 @@ const PortfolioPage = () => {
       }
     };
     fetchPortfolio();
-  }, []);
+  }, [reFetch]);
 
 
   if (isLoading) {

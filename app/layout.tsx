@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { Poppins, DM_Sans, Tenor_Sans } from "next/font/google";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={`${poppins.variable} ${dmSans.variable} ${tenorSans.variable} antialiased font-poppins max-h-svh h-svh overflow-y-auto scrollbar`} >
         {children}
+        <Toaster position="top-right" />
       </body>
     </html>
   );

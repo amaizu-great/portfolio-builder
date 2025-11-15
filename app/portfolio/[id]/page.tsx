@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import EmptyPortfolio from './components/empty';
 import { PortfolioData } from '@/types/portfolio';
-import Template1 from '@/app/templates/template-1';
+import Template1 from '@/app/templates/template1/template-1'
+import useLoadingState from '@/zustand/non-persist/loadingState';
 
 const SinglePortfolio = () => {
+  const { reFetch } = useLoadingState()
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [portfolio, setPortfolio] = useState<PortfolioData | null>(null);
@@ -30,7 +32,7 @@ const SinglePortfolio = () => {
       }
     };
     fetchSinglePortfolio();
-  },[id])
+  },[id, reFetch])
 
   if(isLoading) {
     return (
@@ -58,7 +60,7 @@ const SinglePortfolio = () => {
 
 
   return (
-    <div className="h-svh">
+    <div className="h-svh scrollbar">
       {renderTemplate()}
     </div>
   )
