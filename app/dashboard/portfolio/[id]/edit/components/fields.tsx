@@ -20,7 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { AiFillInstagram, AiFillTikTok  } from "react-icons/ai";
 import useLoadingState from "@/zustand/non-persist/loadingState";
-import AddPortfolioState from "@/zustand/non-persist/addPortfolio";
+import EditPortfolioState from "@/zustand/non-persist/editPortfolio";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"; 
 import { FaGitlab, FaLinkedin, FaXTwitter, FaLaptopCode  } from "react-icons/fa6";
@@ -33,7 +33,7 @@ import { Drawer, DrawerClose, DrawerTitle,  DrawerFooter, DrawerHeader, DrawerTr
 const SocialDrawer = () => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
-  const { profile , setProfile} = AddPortfolioState();
+  const { profile , setProfile} = EditPortfolioState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
   
   if (isDesktop) {
@@ -312,7 +312,7 @@ const SocialDrawer = () => {
 const StackDrawer = () => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
-  const { profile , setProfile} = AddPortfolioState();
+  const { profile , setProfile} = EditPortfolioState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const StackIcon = ({ stack, idx }:{ stack: stackType, idx:number }) => {
@@ -452,7 +452,7 @@ const StackDrawer = () => {
 
 const ProfileTab = () => {
   const { isLoading } = useLoadingState();
-  const { profile , setProfile} = AddPortfolioState();
+  const { profile , setProfile} = EditPortfolioState();
 
   const ProfilePhoto = () => {
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -537,7 +537,7 @@ const ProfileTab = () => {
 const InterestDrawer = () => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
-  const { about , setAbout} = AddPortfolioState();
+  const { about , setAbout} = EditPortfolioState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const addNewInterest = () => {
@@ -642,7 +642,7 @@ const InterestDrawer = () => {
 
 const AboutTab  = () => {
   const { isLoading } = useLoadingState();
-  const { about , setAbout} = AddPortfolioState();
+  const { about , setAbout} = EditPortfolioState();
 
   const AboutPhoto = () => {
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -695,7 +695,7 @@ const AboutTab  = () => {
 const TechDrawer = ({ idx, project }: { idx:number, project: projectType}) => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
-  const { projects , setProjects} = AddPortfolioState();
+  const { projects , setProjects} = EditPortfolioState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
   
   const addNewTechStack = () => {
@@ -803,7 +803,7 @@ const TechDrawer = ({ idx, project }: { idx:number, project: projectType}) => {
 const ProjectsDrawer = ({ idx, project }: { idx:number, project: projectType}) => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
-  const { projects , setProjects} = AddPortfolioState();
+  const { projects , setProjects} = EditPortfolioState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const removeProject = (idx: number) => {
@@ -970,7 +970,7 @@ const ProjectsDrawer = ({ idx, project }: { idx:number, project: projectType}) =
 }
 
 const ProjectsTab =() => {
-  const { projects , setProjects} = AddPortfolioState();
+  const { projects , setProjects} = EditPortfolioState();
   
   const  addNewProject = () => {
     setProjects([...projects, {} as projectType]);
@@ -996,7 +996,7 @@ const ResponsibiltyDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) =
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const { experience , setExperience} = AddPortfolioState();
+  const { experience , setExperience} = EditPortfolioState();
   
   const addNewResponsibilty = () => {
     const updatedExperience = experience.map((e, i) => i === idx ? { ...e, responsibilities: [...(e.responsibilities ?? []), ""] } : e );
@@ -1104,7 +1104,7 @@ const Duration = ({ idx, exp }: { idx:number, exp: experienceType}) => {
   const { isLoading } = useLoadingState();
   const [openTo, setOpenTo] = useState(false)
   const [openFrom, setOpenFrom] = useState(false)
-  const { experience , setExperience} = AddPortfolioState();
+  const { experience , setExperience} = EditPortfolioState();
   
 
   const updateDuration = (field: "from" | "to", value: Date | "present" | undefined) => {
@@ -1179,7 +1179,7 @@ const ExperienceDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) => {
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const { experience , setExperience} = AddPortfolioState();
+  const { experience , setExperience} = EditPortfolioState();
 
   const removeProject = (idx: number) => {
     setExperience(experience.filter((_, index) => index !== idx))
@@ -1319,7 +1319,7 @@ const ExperienceDrawer = ({ idx, exp }: { idx:number, exp: experienceType}) => {
 }
 
 const ExperienceTab = () => {
-  const { experience , setExperience} = AddPortfolioState();
+  const { experience , setExperience} = EditPortfolioState();
 
   const  addNewExperience = () => {
     setExperience([...experience, {} as experienceType]);
@@ -1340,7 +1340,7 @@ const ExperienceTab = () => {
 
 //TESTIMONAL TAB
 const TestimonyPhoto = ({ idx, tes }: { idx:number, tes: testimonialType}) => {
-  const { testimonials , setTestimonials} = AddPortfolioState();
+  const { testimonials , setTestimonials} = EditPortfolioState();
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -1378,7 +1378,7 @@ const TestimonialDrawer = ({ idx, tes }: { idx:number, tes: testimonialType}) =>
   const [open, setOpen] = useState(false)
   const { isLoading } = useLoadingState();
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const { testimonials , setTestimonials} = AddPortfolioState();
+  const { testimonials , setTestimonials} = EditPortfolioState();
 
   const removeTestimony = (idx: number) => {
     setTestimonials(testimonials.filter((_, index) => index !== idx))
@@ -1507,7 +1507,7 @@ const TestimonialDrawer = ({ idx, tes }: { idx:number, tes: testimonialType}) =>
 }
 
 const TestimonialTab = () => {
-  const { testimonials , setTestimonials} = AddPortfolioState();
+  const { testimonials , setTestimonials} = EditPortfolioState();
 
   const  addNewTestimonial = () => {
     setTestimonials([...testimonials, {} as testimonialType]);
@@ -1530,7 +1530,7 @@ const TestimonialTab = () => {
 
 const NewsLetterTab = () => {
   const { isLoading } = useLoadingState();
-  const { newsletter , setNewsletter} = AddPortfolioState(); 
+  const { newsletter , setNewsletter} = EditPortfolioState(); 
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewsletter({...newsletter, email: e.target.value});

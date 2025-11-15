@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import { PortfolioData } from "@/types/portfolio";
 import readJsonFile from "@/functions/readJsonFile";
 import { IconFolderCode } from "@tabler/icons-react";
-import  portfolioState  from "@/zustand/persit/addPortfolio";
+import AddPortfolioState from "@/zustand/non-persist/addPortfolio";
 import { errorToast, succesToast, warnToast } from "@/lib/toastConfig";
 import { Empty, EmptyMedia, EmptyTitle, EmptyHeader, EmptyContent, EmptyDescription } from "@/components/ui/empty";
 
 const EmptyPortfolio = () => {
   const router = useRouter();
-  const {setPortfolioStates} = portfolioState()
+  const {setPortfolioStates} = AddPortfolioState()
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {

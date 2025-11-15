@@ -5,7 +5,7 @@ import { PortfolioData, testimonialType } from "@/types/portfolio";
 const EachTestimonial = ({testimonial}: {testimonial: testimonialType}) => {
   return (
     <div className="px-8 py-12 flex flex-col gap-4 min-w-[320px] max-w-[320px] text-center rounded justify-center items-center shadow-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-100 max-md:min-w-[280px]">
-      <Image src={testimonial.image.url} alt={testimonial.name} className="w-[70px] rounded" />
+      <Image src={testimonial.image.url} alt={testimonial.name} width={70} height={100} className="w-[70px] rounded" />
       <p>{testimonial.testimony}</p>
       
       <div>

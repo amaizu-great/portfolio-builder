@@ -6,8 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { allTemplatesName } from "@/app/templates/allTemplates";
 import useLoadingState from "@/zustand/non-persist/loadingState";
-import AddPortfolioState from "@/zustand/non-persist/addPortfolio";
 import useTemplatesState from "@/zustand/non-persist/templateState";
+import EditPortfolioState from '@/zustand/non-persist/editPortfolio';
 import { errorToast, succesToast, warnToast } from "@/lib/toastConfig";
 import { Select, SelectItem, SelectGroup, SelectLabel, SelectValue, SelectContent, SelectTrigger } from "@/components/ui/select"
 
@@ -33,13 +33,13 @@ const SelectTemplate = () => {
   )
 }
 
-const Header = () => {
+const Header = ({id}:{id:string}) => {
   const router = useRouter()
   const { template } = useTemplatesState();
   const { isLoading, setIsLoading } = useLoadingState();
-  const { profile , about, projects, experience, testimonials, newsletter, clearAllState } = AddPortfolioState();
+  const { profile , about, projects, experience, testimonials, newsletter, clearAllState } = EditPortfolioState();
 
-  const handleCreatePortfolio = async () => {
+  const handleEditPortfolio = async () => {
     setIsLoading(true);
 
     const body = {
@@ -54,15 +54,15 @@ const Header = () => {
     }
 
     try {
-      const res = await fetch("/api/portfolio",{
-        method: "POST",
+      const res = await fetch(`/api/portfolio/${id}`,{
+        method: "PUT",
         credentials: "include",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
       })
   
       if(res.status === 401){
-        toast.error("You are not authorized to create a portfolio  🔐🔐", errorToast)
+        toast.error("You are not authorized to edit a portfolio  🔐🔐", errorToast)
         return;
       }
   
@@ -72,12 +72,12 @@ const Header = () => {
       }
   
       if(!res.ok){
-        toast.error("Failed to create portfolio ⛔😞", errorToast)
+        toast.error("Failed to edit portfolio ⛔😞", errorToast)
         console.log(await res.json())
         return;
       }
 
-      toast.success("Portfolio created successfully 🎉", succesToast)
+      toast.success("Portfolio updated successfully 🎉", succesToast)
       clearAllState()
       router.push("/dashbord/portfolio")
     } catch (error) {
@@ -97,9 +97,9 @@ const Header = () => {
         <div className="flex justify-between items-center w-full">
           <SelectTemplate />
 
-          <Button disabled={isLoading} onClick={handleCreatePortfolio} className="cursor-pointer">
+          <Button disabled={isLoading} onClick={handleEditPortfolio} className="cursor-pointer">
             <ArrowDownToLine />
-            <p className="hidden md:block">Create</p>
+            <p className="hidden md:block">Edit Changes</p>
           </Button>
         </div> 
       </div>
