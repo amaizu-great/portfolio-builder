@@ -79,7 +79,7 @@ const Header = ({id}:{id:string}) => {
 
       toast.success("Portfolio updated successfully 🎉", succesToast)
       clearAllState()
-      router.push("/dashbord/portfolio")
+      router.push("/dashboard/portfolio")
     } catch (error) {
         toast.error("an error occurred ⛔😞", errorToast)
         console.log(error)  

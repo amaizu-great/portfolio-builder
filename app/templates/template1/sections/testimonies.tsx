@@ -1,16 +1,21 @@
-import Image from "next/image";
+import { Quote } from "lucide-react";
 import { PortfolioData, testimonialType } from "@/types/portfolio";
 
 
-const EachTestimonial = ({testimonial}: {testimonial: testimonialType}) => {
+const EachTestimonial = ({testimonial, className}: {testimonial: testimonialType, className?: string}) => {
   return (
-    <div className="px-8 py-12 flex flex-col gap-4 min-w-[320px] max-w-[320px] text-center rounded justify-center items-center shadow-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-100 max-md:min-w-[280px]">
-      <Image src={testimonial.image.url} alt={testimonial.name} width={70} height={100} className="w-[70px] rounded" />
-      <p>{testimonial.testimony}</p>
+    <div className={`p-5 flex flex-col gap-4 rounded-xl shadow-md w-full max-w-[300px] min-w-[250px] min-h-[200px] ${className === "bg-gray-100" ? "bg-white" : "bg-gray-100"}`}>
+      <Quote size={30} className="text-Black"/>
+
+      <p className="h-full text-Grey2 text-[14px]">{testimonial.testimony}</p>
       
-      <div>
-        <p className="text-[16px] font-medium text-[#030712] dark:text-white"> {testimonial.name} </p>
-        <p className="text-[12px] ">{testimonial.company}</p>
+      <div className="flex gap-2 items-center">
+        <div style={{background: `url(${testimonial.image.url})`, backgroundPosition: "center center", backgroundSize: "cover", backgroundRepeat: "no-repeat"}} className="size-10 rounded-full" />
+
+        <div className="flex flex-col gap-1 justify-center leading-none">
+          <p className="text-[14px] font-medium text-black"> {testimonial.name} </p>
+          <p className="text-[12px] text-Grey2">{testimonial.company}</p>
+        </div>
       </div>
     </div>
   )
@@ -27,9 +32,9 @@ const Testimonies = ({portfolio, className}: {portfolio: PortfolioData, classNam
         <p>Nice things people have said about me:</p>
       </div>
 
-      <div className="w-full flex gap-12 overflow-x-auto scrollbar">
+      <div className="w-full py-4 flex gap-12 overflow-x-auto scrollbar">
         {portfolio.testimonials?.map((testimonial, index) => (
-          <EachTestimonial key={index} testimonial={testimonial} />
+          <EachTestimonial key={index} testimonial={testimonial} className={className} />
         ))}
       </div>
     </section>

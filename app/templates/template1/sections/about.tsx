@@ -17,7 +17,7 @@ const About = ({portfolio, className}: {portfolio: PortfolioData, className?: st
       </button>
 
       <div className='flex flex-col w-full items-center justify-around gap-10 text-[14px] md:flex-row' >
-        <ImageComponent />
+        {portfolio.about?.image?.url && <ImageComponent />}
 
         <div className='flex flex-col gap-4 max-w-150'>
           <h1 className="text-[22px] font-bold leading-none text-[#030712] md:text-[25px] lg:text-[30px]">

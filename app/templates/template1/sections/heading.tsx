@@ -15,7 +15,7 @@ const HeadingSection = ({ portfolio }:{ portfolio: PortfolioData }) => {
   }
   return (
     <section className="flex flex-col items-center justify-around gap-10 px-[4%] py-16 text-[14px] md:flex-row-reverse">
-      <ImageComponent />
+      {portfolio.profile?.profileImage?.url && <ImageComponent />}
 
       <div className="flex flex-col gap-10 max-w-[600px]">
         <div className="flex flex-col gap-2">

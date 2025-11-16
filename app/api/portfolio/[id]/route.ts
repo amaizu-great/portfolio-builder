@@ -35,7 +35,6 @@ const processImage = async ( image: ImageType | null | undefined, folder: string
   };
 };
 
-
 export async function GET( req: Request, { params }: { params: Promise<{ id: string }> } ) {
   const id = (await params).id;
 
@@ -142,7 +141,7 @@ export async function PUT( req: Request, { params }: { params: Promise<{ id: str
           };
         })
       );
-    }
+    } 
 
     //about image
     if (body.about?.image) {

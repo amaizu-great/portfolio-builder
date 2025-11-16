@@ -1553,7 +1553,7 @@ const NewsLetterTab = () => {
 
 const Fields = () => {
   return (
-    <div className="flex size-full lg:max-w-1/2 overflow-y-auto scrollbar">
+    <div className="flex size-full lg:max-w-[40%] overflow-y-auto scrollbar">
       <Tabs defaultValue="profile" className="overflow-hidden w-full">
         <div className="flex items-center overflow-x-scroll scrollbar overflow-y-hidden py-3">
           <TabsList >
